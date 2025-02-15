@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">Prediction Results for {{ symbol }}</h1>
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Accuracy (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>LSTM</td>
+                    <td>{{ lstm_acc | round(2) }}</td>
+                </tr>
+                <tr>
+                    <td>GRU</td>
+                    <td>{{ gru_acc | round(2) }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-primary btn-block">Predict Another Stock</a>
+    </div>
+</body>
+</html>
