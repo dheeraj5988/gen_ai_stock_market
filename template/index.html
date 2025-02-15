@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Selector</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        async function fetchStockData(stockSymbol) {
+            // Simulated response for testing
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Sample data structure for testing
+                    const sampleData = [
+                        { date: '2023-01-01', close: 100 },
+                        { date: '2023-01-02', close: 102 },
+                        { date: '2023-01-03', close: 101 },
+                        { date: '2023-01-04', close: 105 },
+                        { date: '2023-01-05', close: 107 },
+                        { date: '2023-01-06', close: 110 },
+                    ];
+                    resolve(sampleData);
+                }, 500); // Simulating network delay
+            });
+        }
+
+        async function displayStockInfo() {
+            const stockSelect = document.getElementById('stock-symbols');
+            const selectedStock = stockSelect.value;
+            const stockInfoDiv = document.getElementById('stock-info');
+            const chartContainer = document.getElementById('chart-container');
+
+            stockInfoDiv.innerHTML = `Selected Stock: <strong>${selectedStock}</strong>`;
+
+            try {
+                // Fetch data for the selected stock
+                const stockData = await fetchStockData(selectedStock);
+                plotStockChart(stockData);
+            } catch (error) {
+                console.error('Error fetching stock data:', error);
+                stockInfoDiv.innerHTML = 'Error fetching stock data.';
+            }
+        }
+
+        function plotStockChart(stockData) {
+            const ctx = document.getElementById('stock-chart').getContext('2d');
+            const labels = stockData.map(data => data.date); // Extract dates for X-axis
+            const prices = stockData.map(data => data.close); // Extract closing prices for Y-axis
+
+            // Create the chart
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Stock Price',
+                        data: prices,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Select a Stock</h1>
+    <select id="stock-symbols" onchange="displayStockInfo()">
+        <option value="ASIANPAINT">ASIANPAINT</option>
+        <option value="BAJAUTOFIN">BAJAUTOFIN</option>
+        <option value="BPCL">BPCL</option>
+        <option value="BRITANNIA">BRITANNIA</option>
+        <option value="CIPLA">CIPLA</option>
+        <option value="DRREDDY">DRREDDY</option>
+        <option value="EICHERMOT">EICHERMOT</option>
+        <option value="GAIL">GAIL</option>
+        <option value="GRASIM">GRASIM</option>
+        <option value="HDFC">HDFC</option>
+        <option value="HDFCBANK">HDFCBANK</option>
+        <option value="HEROHONDA">HEROHONDA</option>
+        <option value="HINDALCO">HINDALCO</option>
+        <option value="HINDLEVER">HINDLEVER</option>
+        <option value="ICICIBANK">ICICIBANK</option>
+        <option value="INDUSINDBK">INDUSINDBK</option>
+        <option value="INFOSYSTCH">INFOSYSTCH</option>
+        <option value="IOC">IOC</option>
+        <option value="ITC">ITC</option>
+        <option value="KOTAKMAH">KOTAKMAH</option>
+        <option value="M&M">M&M</option>
+        <option value="ONGC">ONGC</option>
+        <option value="RELIANCE">RELIANCE</option>
+        <option value="SBIN">SBIN</option>
+        <option value="SESAGOA">SESAGOA</option>
+        <option value="SHREECEM">SHREECEM</option>
+        <option value="SUNPHARMA">SUNPHARMA</option>
+        <option value="TELCO">TELCO</option>
+        <option value="TISCO">TISCO</option>
+        <option value="TITAN">TITAN</option>
+        <option value="UTIBANK">UTIBANK</option>
+        <option value="WIPRO">WIPRO</option>
+        <option value="ZEETELE">ZEETELE</option>
+        <option value="HCLTECH">HCLTECH</option>
+        <option value="BHARTI">BHARTI</option>
+        <option value="KOTAKBANK">KOTAKBANK</option>
+        <option value="MARUTI">MARUTI</option>
+        <option value="TATAMOTORS">TATAMOTORS</option>
+        <option value="UNIPHOS">UNIPHOS</option>
+        <option value="LT">LT</option>
+        <option value="ULTRACEMCO">ULTRACEMCO</option>
+        <option value="TCS">TCS</option>
+        <option value="NTPC">NTPC</option>
+        <option value="JSWSTL">JSWSTL</option>
+        <option value="JSWSTEEL">JSWSTEEL</option>
+        <option value="TATASTEEL">TATASTEEL</option>
+        <option value="BHARTIARTL">BHARTIARTL</option>
+        <option value="TECHM">TECHM</option>
+        <option value="ZEEL">ZEEL</option>
+        <option value="HINDUNILVR">HINDUNILVR</option>
+        <option value="AXISBANK">AXISBANK</option>
+        <option value="POWERGRID">POWERGRID</option>
+        <option value="BAJAJ-AUTO">BAJAJ-AUTO</option>
+        <option value="BAJAJFINSV">BAJAJFINSV</option>
+        <option value="NESTLEIND">NESTLEIND</option>
+        <option value="BAJFINANCE">BAJFINANCE</option>
+        <option value="COALINDIA">COALINDIA</option>
+        <option value="INFY">INFY</option>
+        <option value="HEROMOTOCO">HEROMOTOCO</option>
+        <option value="SSLT">SSLT</option>
+        <option value="UPL">UPL</option>
+        <option value="VEDL">VEDL</option>
+    </select>
+
+    <div id="stock-info" style="margin-top: 20px; font-size: 18px;"></div>
+
+    <div id="chart-container" style="margin-top: 20px;">
+        <canvas id="stock-chart" width="400" height="200"></canvas>
+    </div>
+</body>
+</html>
